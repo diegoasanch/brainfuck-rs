@@ -1,0 +1,18 @@
+[package]
+name = "brainfuck_rs"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+rustsourcebundler = { git = "https://github.com/lpenz/rust-sourcebundler" }
+
+[lib]
+name = "brainfuck_rs"
+path = "src/lib.rs"
+
+[[bin]]
+name = "brainfuck"
+path = "src/bin/main.rs"
