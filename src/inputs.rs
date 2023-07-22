@@ -1,4 +1,4 @@
-use std::io;
+use std::{collections::VecDeque, io};
 
 #[macro_export]
 macro_rules! parse_input {
@@ -23,11 +23,11 @@ pub fn get_program_lines(lines: i32) -> Vec<String> {
     program_lines
 }
 
-pub fn get_program_inputs(lines: i32) -> Vec<i32> {
-    let mut program_inputs = Vec::new();
+pub fn get_program_inputs(lines: i32) -> VecDeque<u8> {
+    let mut program_inputs = VecDeque::new();
     for _ in 0..lines as usize {
-        let c = parse_input!(input(), i32);
-        program_inputs.push(c);
+        let c = parse_input!(input(), u8);
+        program_inputs.push_back(c);
     }
     program_inputs
 }

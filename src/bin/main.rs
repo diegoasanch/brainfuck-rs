@@ -1,6 +1,6 @@
 extern crate brainfuck_rs;
 
-use brainfuck_rs::{inputs, syntax};
+use brainfuck_rs::{executor::Executor, inputs, memory::Memory, program::Program, syntax};
 
 /**
  * Auto-generated code below aims at helping you parse
@@ -11,7 +11,7 @@ fn main() {
     let inputs = input_line.split(" ").collect::<Vec<_>>();
 
     let l = inputs::parse_input!(inputs[0], i32);
-    let s = inputs::parse_input!(inputs[1], i32);
+    let s = inputs::parse_input!(inputs[1], usize);
     let n = inputs::parse_input!(inputs[2], i32);
 
     let program_lines = inputs::get_program_lines(l);
@@ -24,7 +24,13 @@ fn main() {
         return;
     }
 
-    eprintln!("program lines: {:?}", program_lines);
-    eprintln!("program inputs: {:?}", program_inputs);
-    eprintln!("tokens: {:?}", tokens);
+    let mut program = Program::new(tokens, program_inputs);
+    let mut memory = Memory::new(s);
+
+    let mut executor = Executor::new(&mut program, &mut memory);
+
+    if let Err(error) = executor.run() {
+        print!("{}", error);
+    }
+    println!("");
 }

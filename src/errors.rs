@@ -5,6 +5,7 @@ pub enum BrainFuckError {
     SyntaxError,
     PointerOutOfBounds,
     IncorrectValue,
+    NoInputFound,
 }
 
 impl fmt::Display for BrainFuckError {
@@ -13,6 +14,7 @@ impl fmt::Display for BrainFuckError {
             BrainFuckError::SyntaxError => write!(f, "SYNTAX ERROR"),
             BrainFuckError::PointerOutOfBounds => write!(f, "POINTER OUT OF BOUNDS"),
             BrainFuckError::IncorrectValue => write!(f, "INCORRECT VALUE"),
+            BrainFuckError::NoInputFound => write!(f, "NO INPUT FOUND"),
         }
     }
 }

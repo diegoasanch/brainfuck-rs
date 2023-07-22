@@ -2,7 +2,7 @@ use std::vec;
 
 use crate::errors::BrainFuckError;
 
-struct Memory {
+pub struct Memory {
     data: Vec<u8>,
     pointer: usize,
 }
@@ -23,7 +23,7 @@ impl Memory {
         self.data[self.pointer] = value;
     }
 
-    pub fn increment(&mut self) -> Result<(), BrainFuckError> {
+    pub fn increment_value(&mut self) -> Result<(), BrainFuckError> {
         if self.get() == 255 {
             return Err(BrainFuckError::IncorrectValue);
         }
@@ -31,11 +31,27 @@ impl Memory {
         Ok(())
     }
 
-    pub fn decrement(&mut self) -> Result<(), BrainFuckError> {
+    pub fn decrement_value(&mut self) -> Result<(), BrainFuckError> {
         if self.get() == 0 {
             return Err(BrainFuckError::IncorrectValue);
         }
         self.data[self.pointer] -= 1;
+        Ok(())
+    }
+
+    pub fn increment_pointer(&mut self) -> Result<(), BrainFuckError> {
+        if self.pointer == self.data.len() - 1 {
+            return Err(BrainFuckError::PointerOutOfBounds);
+        }
+        self.pointer += 1;
+        Ok(())
+    }
+
+    pub fn decrement_pointer(&mut self) -> Result<(), BrainFuckError> {
+        if self.pointer == 0 {
+            return Err(BrainFuckError::PointerOutOfBounds);
+        }
+        self.pointer -= 1;
         Ok(())
     }
 }
@@ -47,7 +63,7 @@ mod tests {
     #[test]
     fn test_increment_success() {
         let mut mem = Memory::new(1);
-        let result = mem.increment();
+        let result = mem.increment_value();
 
         assert_eq!(result, Ok(()));
         assert_eq!(mem.get(), 1);
@@ -58,7 +74,7 @@ mod tests {
         let mut mem = Memory::new(1);
         // Set to max allowed value
         mem.set(255);
-        let result = mem.increment();
+        let result = mem.increment_value();
 
         assert_eq!(result, Err(BrainFuckError::IncorrectValue));
     }
@@ -67,7 +83,7 @@ mod tests {
     fn test_decrement_success() {
         let mut mem = Memory::new(1);
         mem.set(1); // Set to 1 so it can be decremented
-        let result = mem.decrement();
+        let result = mem.decrement_value();
 
         assert_eq!(result, Ok(()));
         assert_eq!(mem.get(), 0); // The value at the current pointer should now be 0
@@ -77,7 +93,7 @@ mod tests {
     fn test_decrement_error() {
         let mut mem = Memory::new(1);
         // The memory is initialized to 0, so decrementing should cause an error
-        let result = mem.decrement();
+        let result = mem.decrement_value();
 
         assert_eq!(result, Err(BrainFuckError::IncorrectValue));
     }
