@@ -34,7 +34,7 @@ impl<'a> Executor<'a> {
             Instruction::Output => {
                 print!("{}", self.memory.get() as char);
             }
-            Instruction::Input => todo!(),
+            Instruction::Input => self.memory.set(self.program.consume_next_input()?),
             Instruction::JumpForward => todo!(),
             Instruction::JumpBackward => todo!(),
         }
