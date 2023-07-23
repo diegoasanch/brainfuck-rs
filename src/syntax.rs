@@ -1,6 +1,6 @@
 use crate::errors::BrainFuckError;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Instruction {
     IncrementPointer,
     DecrementPointer,
