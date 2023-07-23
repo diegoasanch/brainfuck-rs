@@ -2,11 +2,7 @@
 
 A [Brainfuck](https://en.wikipedia.org/wiki/Brainfuck) interpreter, written in Rust.
 
-This is my solution for the Clash Of Code ["WHAT THE BRAINFUCK !"](https://www.codingame.com/training/medium/what-the-brainfuck) puzzle.
-
-
-> **Note**
-> Work in progress
+This is my solution for the CodinGame ["WHAT THE BRAINFUCK !"](https://www.codingame.com/training/medium/what-the-brainfuck) puzzle.
 
 ## Build
 
