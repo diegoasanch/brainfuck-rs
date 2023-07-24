@@ -2,10 +2,7 @@ extern crate brainfuck_rs;
 
 use brainfuck_rs::{executor::Executor, inputs, memory::Memory, program::Program, syntax};
 
-/**
- * Auto-generated code below aims at helping you parse
- * the standard input according to the problem statement.
- **/
+// Version submitted to CodinGame
 fn main() {
     let input_line = inputs::input();
     let inputs = input_line.split(" ").collect::<Vec<_>>();

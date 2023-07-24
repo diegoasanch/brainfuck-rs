@@ -6,7 +6,7 @@ use rustsourcebundler::Bundler;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut bundler: Bundler = Bundler::new(
-        Path::new("src/bin/main.rs"),
+        Path::new("src/bin/codingame.rs"),
         Path::new("target/codingame.rs"),
     );
     bundler.crate_name("brainfuck_rs");
