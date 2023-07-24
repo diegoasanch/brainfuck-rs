@@ -16,8 +16,8 @@ This will:
 
 1. Build binary executables for both
 
-  - `brainfuck`: the default executable with a CLI interface. Run this executable with the `-h` flag for info on the expected input. Binary location: `target/debug/brainfuck`.
-  - `codingame`: the executable with the CodinGame puzzle format. This one requires the inputs in a specific format [specified below](#codingame_exec). Binary location: `target/debug/codingame`.
+   - `brainfuck`: the default executable with a CLI interface. Run this executable with the `-h` flag for info on the expected input. Binary location: `target/debug/brainfuck`.
+   - `codingame`: the executable with the CodinGame puzzle format. This one requires the inputs in a specific format [specified below](#codingame_exec). Binary location: `target/debug/codingame`.
 
 2. Create a bundled version of the `codingame` executable at `target/codingame.rs`. This bundled file can be copy-pasted into the CodinGame IDE.
 
