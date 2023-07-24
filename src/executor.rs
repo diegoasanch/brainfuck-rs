@@ -1,19 +1,31 @@
-use crate::{errors::BrainFuckError, memory::Memory, program::Program, syntax::Instruction};
+use std::collections::VecDeque;
+
+use crate::{
+    errors::BrainFuckError, inputs::input, memory::Memory, parse_input, program::Program,
+    syntax::Instruction,
+};
 
 pub struct Executor<'a> {
     program: &'a mut Program,
     memory: &'a mut Memory,
     // Used to store the instruction pointers of the JumpForwards
     call_stack: Vec<usize>,
+    /// If None, will get inputs from stdin
+    inputs: Option<VecDeque<u8>>,
 }
 
 impl<'a> Executor<'a> {
-    pub fn new(program: &'a mut Program, memory: &'a mut Memory) -> Self {
+    pub fn new(
+        program: &'a mut Program,
+        memory: &'a mut Memory,
+        inputs: Option<VecDeque<u8>>,
+    ) -> Self {
         let call_stack = Vec::new();
         Self {
             program,
             call_stack,
             memory,
+            inputs,
         }
     }
 
@@ -45,9 +57,21 @@ impl<'a> Executor<'a> {
     }
 
     fn execute_input(&mut self) -> Result<(), BrainFuckError> {
-        let input = self.program.consume_next_input()?;
+        let input = if self.inputs.is_some() {
+            self.consume_next_input()?
+        } else {
+            parse_input!(input(), u8)
+        };
         self.memory.set(input);
         Ok(())
+    }
+
+    pub fn consume_next_input(&mut self) -> Result<u8, BrainFuckError> {
+        self.inputs
+            .as_mut()
+            .ok_or(BrainFuckError::NoInputFound)?
+            .pop_front()
+            .ok_or(BrainFuckError::NoInputFound)
     }
 
     fn execute_jump_forward(&mut self) -> Result<(), BrainFuckError> {

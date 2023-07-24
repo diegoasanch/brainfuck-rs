@@ -6,6 +6,9 @@ build = "build.rs"
 default-run = "brainfuck"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[dependencies]
+clap = { version = "4.3.19", features = ["derive"] }
+
 [build-dependencies]
 rustsourcebundler = { git = "https://github.com/lpenz/rust-sourcebundler" }
 

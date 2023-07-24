@@ -28,7 +28,7 @@ impl Instruction {
     }
 }
 
-pub fn tokenize(program: &Vec<String>) -> Vec<Instruction> {
+pub fn tokenize(program: &Vec<&str>) -> Vec<Instruction> {
     let mut tokens = Vec::new();
     for line in program {
         for c in line.chars() {

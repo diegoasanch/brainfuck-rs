@@ -11,7 +11,9 @@ fn main() {
     let s = inputs::parse_input!(inputs[1], usize);
     let n = inputs::parse_input!(inputs[2], i32);
 
-    let program_lines = inputs::get_program_lines(l);
+    let input_lines = inputs::get_program_lines(l);
+
+    let program_lines = input_lines.iter().map(|s| s.as_str()).collect();
     let program_inputs = inputs::get_program_inputs(n);
 
     let tokens = syntax::tokenize(&program_lines);
@@ -21,10 +23,9 @@ fn main() {
         return;
     }
 
-    let mut program = Program::new(tokens, program_inputs);
+    let mut program = Program::new(tokens);
     let mut memory = Memory::new(s);
-
-    let mut executor = Executor::new(&mut program, &mut memory);
+    let mut executor = Executor::new(&mut program, &mut memory, Some(program_inputs));
 
     if let Err(error) = executor.run() {
         print!("{}", error);

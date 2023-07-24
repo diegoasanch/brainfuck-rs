@@ -1,20 +1,16 @@
-use std::collections::VecDeque;
-
 use crate::{errors::BrainFuckError, syntax::Instruction};
 
 pub struct Program {
     instructions: Vec<Instruction>,
     pointer: usize,
-    inputs: VecDeque<u8>,
 }
 
 impl Program {
-    pub fn new(instructions: Vec<Instruction>, inputs: VecDeque<u8>) -> Self {
+    pub fn new(instructions: Vec<Instruction>) -> Self {
         let pointer = 0;
         Self {
             instructions,
             pointer,
-            inputs,
         }
     }
 
@@ -44,10 +40,6 @@ impl Program {
         }
         self.pointer = location;
         Ok(())
-    }
-
-    pub fn consume_next_input(&mut self) -> Result<u8, BrainFuckError> {
-        self.inputs.pop_front().ok_or(BrainFuckError::NoInputFound)
     }
 
     pub fn get_closing_bracket_pointer(&self) -> Result<usize, BrainFuckError> {
@@ -90,7 +82,7 @@ mod test {
             Instruction::JumpBackward,
         ];
 
-        let program = Program::new(instructions, VecDeque::new());
+        let program = Program::new(instructions);
         let closing_pos = program.get_closing_bracket_pointer();
 
         assert_eq!(closing_pos, Ok(2));
@@ -100,7 +92,7 @@ mod test {
     fn returns_syntax_error_when_no_closing_exist() {
         let instructions = vec![Instruction::JumpForward, Instruction::IncrementPointer];
 
-        let program = Program::new(instructions, VecDeque::new());
+        let program = Program::new(instructions);
         let closing_pos = program.get_closing_bracket_pointer();
 
         assert_eq!(closing_pos, Err(BrainFuckError::SyntaxError));
